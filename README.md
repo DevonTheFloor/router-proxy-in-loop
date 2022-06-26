@@ -1,2 +1,2 @@
-# router-proxy
-SErver proxy forweb osting, to use with a front end server.
+# Router-proxy
+Node.js server in charge of reverse-proxy and vhost behind a front end server.
