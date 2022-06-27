@@ -23,6 +23,7 @@
   "homepage": "https://github.com/DevonTheFloor/router-proxy#readme",
   "dependencies": {
     "express": "^4.18.1",
+    "helmet": "^5.1.0",
     "http-proxy": "^1.18.1",
     "mongoose": "^6.4.0",
     "vhost": "^3.0.2"
