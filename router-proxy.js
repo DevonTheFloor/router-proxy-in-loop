@@ -3,18 +3,12 @@ const routeur = express();
 const helmet = require('helmet');
 const httpProxy = require('http-proxy')
 const proxy = httpProxy.createProxyServer()
-//const mongoose = require('mongoose');
-//const nMailer = require('nodemailer');
 const vhost = require('vhost');
-
-/*mongoose.connect(process.env.ROUTER_BD,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log(':D Local ConneXion to MDB!'))
-  .catch(() => console.log('8X Connexion à MongoDB échouée !'));*/
+const root = require('../router-conf/router-conf');
 
 routeur.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.DOMAIN_NAME );
+  res.setHeader('Access-Control-Allow-Origin', '*' );
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   res.setHeader('X-Frame-Options',' SAMEORIGIN');
@@ -24,16 +18,15 @@ routeur.use((req, res, next) => {
 });
 
 routeur.disable('x-powered-by');
-//follow the /api path for hit the targeted server
 
-
-routeur.use('/',(req, res, next)=>{
+routeur.use('/', express.static(process.env.PNR_PATH_UI));
+routeur.use(process.env.PNR_API_PATH,(req, res, next)=>{
   proxy.web(req, res, {
-    target: process.env.FIRST_SITE, 
-    changeOrigin: false,
-    /*pathRewrite: {
-      '^/api/': '/', // rewrite path
-    }*/
+    target: process.env.PNR_API_HOST, 
+    changeOrigin: true,
+    pathRewrite: {
+      '^/engin': '/', // rewrite path
+    }
   });
 })
 routeur.use(vhost('SECOND_SITE', function handle (req, res, next) {
