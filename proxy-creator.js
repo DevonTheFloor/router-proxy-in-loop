@@ -1,7 +1,7 @@
 const httpProxy = require('http-proxy')
 const proxy = httpProxy.createProxyServer();
 
-const proxyWeb= (url, origin, rewrite)=> {
+const proxyWeb = (url, origin, rewrite)=> {
   proxy.web(req, res, {
     target: url, 
     changeOrigin: true,
@@ -11,4 +11,4 @@ const proxyWeb= (url, origin, rewrite)=> {
   });
 }
 
-module.exports = creator-proxy;
+module.exports = creatorProxy;
