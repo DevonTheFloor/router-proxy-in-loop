@@ -4,7 +4,6 @@ const helmet = require('helmet');
 const httpProxy = require('http-proxy')
 const proxy = httpProxy.createProxyServer()
 const vhost = require('vhost');
-const root = require('../router-conf/router-conf');
 
 routeur.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.DOMAIN_NAME );
