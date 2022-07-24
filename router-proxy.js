@@ -39,7 +39,7 @@ routeur.use(process.env.RSS_PATH,(req, res, next)=>{
     });
   })
 
-routeur.use(vhost('SECOND_SITE', function handle (req, res, next) {
+routeur.use(vhost('apprentis-et-patrons.fr', function handle (req, res, next) {
   // for match of "foo.bar.example.com:8080" against "*.*.example.com":
   console.dir(req.vhost.host) // => 'foo.bar.example.com:8080'
   console.dir(req.vhost.hostname) // => 'foo.bar.example.com'
