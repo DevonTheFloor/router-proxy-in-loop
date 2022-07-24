@@ -1,12 +1,12 @@
-const express = require('express');
-const routeur = express();
-const helmet = require('helmet');
-const httpProxy = require('http-proxy')
-const proxy = httpProxy.createProxyServer()
-const vhost = require('vhost');
+const express = require('express'),
+  routeur = express(),
+  helmet = require('helmet'),
+  httpProxy = require('http-proxy'),
+  proxy = httpProxy.createProxyServer(),
+  vhost = require('vhost');
 
 routeur.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.DOMAIN_NAME );
+  res.setHeader('Access-Control-Allow-Origin', '*' );
   res.setHeader('Access-Control-Allow-Origin', '*' );
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -18,8 +18,14 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-routeur.use('/', express.static(process.env.PNR_PATH_UI));
-routeur.use(process.env.PNR_API_PATH,(req, res, next)=>{
+const piece = express();
+piece.use('/', express.static(process.env.PNR_PATH_UI));
+
+const anp = express();
+anp.use(express.static(preocess.env.ANP_PATH_UI));
+
+routeur.use(vhost(process.env.PNR_DOMAIN, piece));
+routeur.use(PNR_API_PATH,(req, res, next)=>{
   proxy.web(req, res, {
     target: process.env.PNR_API_HOST, 
     changeOrigin: true,
@@ -29,7 +35,18 @@ routeur.use(process.env.PNR_API_PATH,(req, res, next)=>{
   });
 })
 
-routeur.use(process.env.RSS_PATH,(req, res, next)=>{
+routeur.use(vhost(preocess.env.ANP_DOMAIN, anp));
+routeur.use(ANP_API_PATH,(req, res, next)=>{
+  proxy.web(req, res, {
+    target: process.env.ANP_API_HOST, 
+    changeOrigin: true,
+    pathRewrite: {
+      '^/engin': '/', // rewrite path
+    }
+  });
+})
+
+routeur.use('/rssflow',(req, res, next)=>{
     proxy.web(req, res, {
       target: process.env.RSS_HOST, 
       changeOrigin: true,
@@ -38,13 +55,5 @@ routeur.use(process.env.RSS_PATH,(req, res, next)=>{
       }
     });
   })
-
-routeur.use(vhost('apprentis-et-patrons.fr', function handle (req, res, next) {
-  // for match of "foo.bar.example.com:8080" against "*.*.example.com":
-  console.dir(req.vhost.host) // => 'foo.bar.example.com:8080'
-  console.dir(req.vhost.hostname) // => 'foo.bar.example.com'
-  console.dir(req.vhost.length) // => 2
-  res.status(200).json({message: "Mais non!!!"});
-}))
 
 module.exports = routeur;
