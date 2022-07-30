@@ -22,7 +22,7 @@ const piece = express();
 piece.use('/', express.static(process.env.PNR_PATH_UI));
 
 const anp = express();
-anp.use(express.static(preocess.env.ANP_PATH_UI));
+anp.use(express.static(process.env.ANP_PATH_UI));
 
 routeur.use(vhost(process.env.PNR_DOMAIN, piece));
 routeur.use('/engin',(req, res, next)=>{
@@ -35,14 +35,14 @@ routeur.use('/engin',(req, res, next)=>{
   });
 })
 
-routeur.use(vhost(preocess.env.ANP_DOMAIN, anp));
-routeur.use('anp-api',(req, res, next)=>{
+routeur.use(vhost(process.env.ANP_DOMAIN, anp));
+routeur.use('/myapis',(req, res, next)=>{
   proxy.web(req, res, {
     target: process.env.ANP_API_HOST, 
-    changeOrigin: true,
-    pathRewrite: {
+    changeOrigin: false,
+    /*pathRewrite: {
       '^/anp-api': '/', // rewrite path
-    }
+    }*/
   });
 })
 
