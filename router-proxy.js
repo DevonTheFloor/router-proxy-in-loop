@@ -3,6 +3,7 @@ const express = require('express'),
   helmet = require('helmet'),
   httpProxy = require('http-proxy'),
   proxy = httpProxy.createProxyServer(),
+  proxy2 = httpProxy.createProxyServer(),
   vhost = require('vhost');
 
 routeur.use((req, res, next) => {
@@ -37,9 +38,9 @@ routeur.use('/engin',(req, res, next)=>{
 
 routeur.use(vhost(process.env.ANP_DOMAIN, anp));
 routeur.use('/myapis',(req, res, next)=>{
-  proxy.web(req, res, {
+  proxy2.web(req, res, {
     target: process.env.ANP_API_HOST, 
-    changeOrigin: false,
+    changeOrigin: true,
     /*pathRewrite: {
       '^/anp-api': '/', // rewrite path
     }*/
