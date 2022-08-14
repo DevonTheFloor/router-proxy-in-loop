@@ -3,12 +3,11 @@ const express = require('express'),
   helmet = require('helmet'),
   httpProxy = require('http-proxy'),
   proxy = httpProxy.createProxyServer(),
-  config = require('../router-config/config'),
-  configUi = config.configUi,
-  configApi = config.configApi,
+  proxy2 = httpProxy.createProxyServer(),
   vhost = require('vhost');
 
 routeur.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*' );
   res.setHeader('Access-Control-Allow-Origin', '*' );
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -20,33 +19,14 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-
-configUi.forEach(ui =>{
-  const site = express();
-  site.use('/', express.static(ui.path));
-  routeur.use(vhost(ui.domain, site));
-})
-/*const piece = express();
-piece.use('/', express.static('../pnr-ui/piece'));
-routeur.use(vhost('piece.th', piece));
+const piece = express();
+piece.use('/', express.static(process.env.PNR_PATH_UI));
 
 const anp = express();
-anp.use(express.static('../anp-ui/anp'));
-routeur.use(vhost('apprebti.th', anp));*/
+anp.use(express.static(process.env.ANP_PATH_UI));
 
-configApi.forEach(api => {
-  routeur.use(api.path,(req, res, next)=>{
-    const pathRewrite = '^'+api.path;
-    proxy.web(req, res, {
-      target: api.target, 
-      changeOrigin: true,
-      pathRewrite: {
-        pathRewrite: '/', // rewrite path
-      }
-    });
-  })
-})
-/*routeur.use('/engin',(req, res, next)=>{
+routeur.use(vhost(process.env.PNR_DOMAIN, piece));
+routeur.use('/engin',(req, res, next)=>{
   proxy.web(req, res, {
     target: process.env.PNR_API_HOST, 
     changeOrigin: true,
@@ -54,16 +34,27 @@ configApi.forEach(api => {
       '^/engin': '/', // rewrite path
     }
   });
-})*/
+})
 
+routeur.use(vhost(process.env.ANP_DOMAIN, anp));
 routeur.use('/myapis',(req, res, next)=>{
-  proxy.web(req, res, {
+  proxy2.web(req, res, {
     target: process.env.ANP_API_HOST, 
     changeOrigin: true,
-    pathRewrite: {
-      '^/myapis': '/', // rewrite path
-    }
+    /*pathRewrite: {
+      '^/anp-api': '/', // rewrite path
+    }*/
   });
 })
+
+routeur.use('/rssflow',(req, res, next)=>{
+    proxy.web(req, res, {
+      target: process.env.RSS_HOST, 
+      changeOrigin: true,
+      pathRewrite: {
+        '^/rssflow': '/', // rewrite path
+      }
+    });
+  })
 
 module.exports = routeur;
