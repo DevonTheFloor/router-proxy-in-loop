@@ -26,6 +26,7 @@
     "helmet": "^5.1.0",
     "http-proxy": "^1.18.1",
     "mongoose": "^6.4.0",
+    "rendertron-middleware": "^0.1.5",
     "vhost": "^3.0.2"
   }
 }

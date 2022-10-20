@@ -6,7 +6,8 @@ const express = require('express'),
   config = require('../router-config/config'),
   configUi = config.configUi,
   configApi = config.configApi,
-  vhost = require('vhost');
+  vhost = require('vhost'),
+  rendertron = require('rendertron-middleware');
 
 routeur.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*' );
@@ -23,16 +24,13 @@ routeur.disable('x-powered-by');
 
 configUi.forEach(ui =>{
   const site = express();
+  const render = express();
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
+  render.use(rendertron.makeMiddleware({
+    proxyUrl: ui.render+'/render',
+  }));
 })
-/*const piece = express();
-piece.use('/', express.static('../pnr-ui/piece'));
-routeur.use(vhost('piece.th', piece));
-
-const anp = express();
-anp.use(express.static('../anp-ui/anp'));
-routeur.use(vhost('apprebti.th', anp));*/
 
 configApi.forEach(api => {
   routeur.use(api.path,(req, res, next)=>{
@@ -41,20 +39,11 @@ configApi.forEach(api => {
       target: api.target, 
       changeOrigin: true,
       pathRewrite: {
-        pathRewrite: '/', // rewrite path
+        pathRewritedd: '/', // rewrite path
       }
     });
   })
 })
-/*routeur.use('/engin',(req, res, next)=>{
-  proxy.web(req, res, {
-    target: process.env.PNR_API_HOST, 
-    changeOrigin: true,
-    pathRewrite: {
-      '^/engin': '/', // rewrite path
-    }
-  });
-})*/
 
 routeur.use('/myapis',(req, res, next)=>{
   proxy.web(req, res, {
