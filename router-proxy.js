@@ -24,10 +24,9 @@ routeur.disable('x-powered-by');
 
 configUi.forEach(ui =>{
   const site = express();
-  const render = express();
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
-  render.use(rendertron.makeMiddleware({
+  site.use(rendertron.makeMiddleware({
     proxyUrl: ui.render+'/render',
   }));
 })
