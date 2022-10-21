@@ -9,7 +9,9 @@ const express = require('express'),
   configApi = config.configApi,
   vhost = require('vhost'),
   rendertron = require('rendertron-middleware'),
-  listBot = rendertron.botUserAgents;
+  listBot = rendertron.botUserAgents,
+  BOTS = listBot.concat('Discordbot'),
+  BOTS_LIST = new RegExp(BOTS.join('|'),'i');
 
 routeur.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*' );
@@ -30,7 +32,7 @@ configUi.forEach(ui =>{
   routeur.use(vhost(ui.domain, site));
   site.use(rendertron.makeMiddleware({
     proxyUrl: ui.render+'/render',
-    userAgentPattern: listBot,
+    userAgentPattern: BOTS_LIST,
     injectShadyDom: true,
     timeout: 11000
     //listBot
