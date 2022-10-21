@@ -8,7 +8,7 @@ const express = require('express'),
   configUi = config.configUi,
   configApi = config.configApi,
   vhost = require('vhost'),
-  listBot = require('botUserAgents'),
+  //listBot = require('botUserAgents'),
   rendertron = require('rendertron-middleware');
 
 routeur.use((req, res, next) => {
@@ -32,7 +32,7 @@ configUi.forEach(ui =>{
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
   site.use(rendertron.makeMiddleware({
-    proxyUrl: ui.render+'/render',
+    proxyUrl: ui.render+'/render'
     //listBot
   }));
 })
