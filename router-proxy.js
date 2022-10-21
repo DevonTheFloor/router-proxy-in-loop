@@ -32,7 +32,9 @@ configUi.forEach(ui =>{
   routeur.use(vhost(ui.domain, site));
   site.use(rendertron.makeMiddleware({
     proxyUrl: ui.render+'/render',
-    userAgentPattern: listBot
+    userAgentPattern: listBot,
+    injectShadyDom: true,
+    timeout: 11000
     //listBot
   }));
 })
