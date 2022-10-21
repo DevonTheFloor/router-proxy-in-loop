@@ -1,3 +1,4 @@
+
 const express = require('express'),
   routeur = express(),
   helmet = require('helmet'),
@@ -7,6 +8,7 @@ const express = require('express'),
   configUi = config.configUi,
   configApi = config.configApi,
   vhost = require('vhost'),
+  listBot = require('botUserAgents'),
   rendertron = require('rendertron-middleware');
 
 routeur.use((req, res, next) => {
@@ -21,13 +23,17 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-
+routeur.use('/',(req, res, next)=> {
+  const ua = req.headers['user-agent'];
+    console.log('USE Agent : ', ua);
+})
 configUi.forEach(ui =>{
   const site = express();
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
   site.use(rendertron.makeMiddleware({
     proxyUrl: ui.render+'/render',
+    //listBot
   }));
 })
 
