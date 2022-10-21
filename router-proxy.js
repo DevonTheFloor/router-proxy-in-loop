@@ -25,8 +25,6 @@ routeur.disable('x-powered-by');
 
 
 configUi.forEach(ui =>{
-  const ua = req.headers['user-agent'];
-  console.log('UA : ', ua);
   const site = express();
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
