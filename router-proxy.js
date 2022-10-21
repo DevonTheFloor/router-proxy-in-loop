@@ -8,8 +8,8 @@ const express = require('express'),
   configUi = config.configUi,
   configApi = config.configApi,
   vhost = require('vhost'),
-  listBot = rendertron.botUserAgents,
-  rendertron = require('rendertron-middleware');
+  rendertron = require('rendertron-middleware'),
+  listBot = rendertron.botUserAgents;
 
 routeur.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*' );
