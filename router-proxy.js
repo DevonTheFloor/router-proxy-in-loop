@@ -27,14 +27,15 @@ routeur.disable('x-powered-by');
 
 
 configUi.forEach(ui =>{
+  site.use('/', express.static(ui.path));
+  routeur.use(vhost(ui.domain, site));
   site.use(rendertron.makeMiddleware({
     proxyUrl: ui.render+'/render',
     userAgentPattern: BOTS_LIST,
     injectShadyDom: true,
     timeout: 11000
   }));
-  site.use('/', express.static(ui.path));
-  routeur.use(vhost(ui.domain, site));
+
 })
 
 configApi.forEach(api => {
