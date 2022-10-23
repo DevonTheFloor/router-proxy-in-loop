@@ -28,51 +28,31 @@ routeur.use((req, res, next) => {
 routeur.disable('x-powered-by');
 
 
-configUi.forEach(ui =>{
-  routeur.use((req, res, next)=>{
-    const ua = req.headers['user-agent'],
-      search = /\+http:\/\//;
-    let goto = search.test(ua);
-      if (goto = true) {
-        routeur.use(rendertron.makeMiddleware({
-          proxyUrl: ui.render+'/render',
-          userAgentPattern: BOTS_LIST,
-          injectShadyDom: true,
-          timeout: 11000
-        }));
-      } else {
-        const site = express();
-        site.use('/', express.static(ui.path));
-        routeur.use(vhost(ui.domain, site));
-      }
-  })
-})
 
-/*routeur.use(rendertron.makeMiddleware({
-  proxyUrl: ui.render+'/render',
-  userAgentPattern: BOTS_LIST,
-  injectShadyDom: true,
-  timeout: 11000
-}));
-configUi.forEach(ui =>{
-
-  const site = express();
-  site.use('/', express.static(ui.path));
-  routeur.use(vhost(ui.domain, site));
-})*/
 
 /*configUi.forEach(ui =>{
+
   const site = express();
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
-  routeur.use(rendertron.makeMiddleware({
-    proxyUrl: ui.render+'/render',
-    userAgentPattern: BOTS_LIST,
-    injectShadyDom: true,
-    timeout: 11000
-  }));
+})
+*/
+configUi.forEach(ui =>{
+  const site = express();
+  routeur.use(rendertron.makeMiddleware(
+    {
+      proxyUrl: ui.render+'/render',
+      userAgentPattern: BOTS_LIST,
+      injectShadyDom: true,
+      timeout: 11000
+    }
+  ));
 
-})*/
+  site.use('/', express.static(ui.path));
+  routeur.use(vhost(ui.domain, site));
+
+
+})
 
 configApi.forEach(api => {
   routeur.use(api.path,(req, res, next)=>{
