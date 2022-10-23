@@ -1,3 +1,4 @@
+const { Router } = require('express');
 
 const express = require('express'),
   routeur = express(),
@@ -11,6 +12,7 @@ const express = require('express'),
   rendertron = require('rendertron-middleware'),
   listBot = rendertron.botUserAgents,
   BOTS = listBot.concat('Discordbot'),
+  MARK_BOT= '+http://',
   BOTS_LIST = new RegExp(BOTS.join('|'),'i');
 
 routeur.use((req, res, next) => {
@@ -25,17 +27,37 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-routeur.use(rendertron.makeMiddleware({
+routeur.use((req, res, next)=>{
+  const ua = req.headers['user-agent'],
+    search = /+http:\/\//,
+    goto = search.test(ua);
+    if (goto) {
+      routeur.use(rendertron.makeMiddleware({
+        proxyUrl: ui.render+'/render',
+        userAgentPattern: BOTS_LIST,
+        injectShadyDom: true,
+        timeout: 11000
+      }));
+    } else {
+      configUi.forEach(ui =>{
+        const site = express();
+        site.use('/', express.static(ui.path));
+        routeur.use(vhost(ui.domain, site));
+      })
+    }
+})
+/*routeur.use(rendertron.makeMiddleware({
   proxyUrl: ui.render+'/render',
   userAgentPattern: BOTS_LIST,
   injectShadyDom: true,
   timeout: 11000
 }));
 configUi.forEach(ui =>{
+
   const site = express();
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
-})
+})*/
 
 /*configUi.forEach(ui =>{
   const site = express();
