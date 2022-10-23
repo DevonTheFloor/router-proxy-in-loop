@@ -27,25 +27,27 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-routeur.use((req, res, next)=>{
-  const ua = req.headers['user-agent'],
-    search = /+http:\/\//,
-    goto = search.test(ua);
-    if (goto) {
-      routeur.use(rendertron.makeMiddleware({
-        proxyUrl: ui.render+'/render',
-        userAgentPattern: BOTS_LIST,
-        injectShadyDom: true,
-        timeout: 11000
-      }));
-    } else {
-      configUi.forEach(ui =>{
+
+configUi.forEach(ui =>{
+  routeur.use((req, res, next)=>{
+    const ua = req.headers['user-agent'],
+      search = /\+http:\/\//;
+    let goto = search.test(ua);
+      if (goto = true) {
+        routeur.use(rendertron.makeMiddleware({
+          proxyUrl: ui.render+'/render',
+          userAgentPattern: BOTS_LIST,
+          injectShadyDom: true,
+          timeout: 11000
+        }));
+      } else {
         const site = express();
         site.use('/', express.static(ui.path));
         routeur.use(vhost(ui.domain, site));
-      })
-    }
+      }
+  })
 })
+
 /*routeur.use(rendertron.makeMiddleware({
   proxyUrl: ui.render+'/render',
   userAgentPattern: BOTS_LIST,
