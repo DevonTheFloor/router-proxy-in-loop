@@ -57,7 +57,8 @@ routeur.disable('x-powered-by');
      }
    })*/
 
-configUi.forEach(ui =>{  
+configUi.forEach(ui =>{ 
+  const site = express(); 
   routeur.use(rendertron.makeMiddleware(
     {
       proxyUrl: ui.render+'/render',
