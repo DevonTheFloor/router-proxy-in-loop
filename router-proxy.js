@@ -37,25 +37,8 @@ routeur.disable('x-powered-by');
 */
 configUi.forEach(ui =>{
   const site = express();
-  /*routeur.use((req, res, next)=> {
-    const botUserAgents = [
-     'baiduspider',
-     'bingbot',
-     'embedly',
-     'facebookexternalhit',
-     'linkedinbot',
-     'outbrain',
-     'pinterest',
-     'quora link preview',
-     'rogerbot',
-     'showyoubot',
-     'slackbot',
-     'TelegramBot',
-     'twitterbot',
-     'vkShare',
-     'W3C_Validator',
-     'whatsapp',
-     'Discordbot' ]
+  routeur.use((req, res, next)=> {
+    const botUserAgents = ['baiduspider','bingbot','embedly','facebookexternalhit','linkedinbot','outbrain','pinterest','quora link preview','rogerbot','showyoubot','slackbot','TelegramBot','twitterbot','vkShare','W3C_Validator','whatsapp','Discordbot' ]
    
    let ua = req.headers['user-agent'],
      botlist = new RegExp(botUserAgents.join('|'), 'i'),
@@ -69,20 +52,21 @@ configUi.forEach(ui =>{
          }
        });
      } else {
-       next()
+      site.use('/', express.static(ui.path));
+      routeur.use(vhost(ui.domain, site));
      }
-   })*/
-  routeur.use(rendertron.makeMiddleware(
+   })
+  /*routeur.use(rendertron.makeMiddleware(
     {
       proxyUrl: ui.render+'/render',
       userAgentPattern: BOTS_LIST,
       injectShadyDom: true,
       timeout: 11000
     }
-  ));
+  ));*/
 
-  site.use('/', express.static(ui.path));
-  routeur.use(vhost(ui.domain, site));
+  /*site.use('/', express.static(ui.path));
+  routeur.use(vhost(ui.domain, site));*/
 
 
 })
