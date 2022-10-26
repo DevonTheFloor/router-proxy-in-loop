@@ -37,7 +37,7 @@ routeur.disable('x-powered-by');
 */
 configUi.forEach(ui =>{
   const site = express();
-  routeur.use((req, res, next)=> {
+  /*routeur.use((req, res, next)=> {
     const botUserAgents = [
      'baiduspider',
      'bingbot',
@@ -57,7 +57,7 @@ configUi.forEach(ui =>{
      'whatsapp',
      'Discordbot' ]
    
-   const ua = req.headers['user-agent'],
+   let ua = req.headers['user-agent'],
      botlist = new RegExp(botUserAgents.join('|'), 'i'),
      itis = botlist.test(ua);
      if( itis = true) {
@@ -71,15 +71,15 @@ configUi.forEach(ui =>{
      } else {
        next()
      }
-   })
-  /*routeur.use(rendertron.makeMiddleware(
+   })*/
+  routeur.use(rendertron.makeMiddleware(
     {
       proxyUrl: ui.render+'/render',
       userAgentPattern: BOTS_LIST,
       injectShadyDom: true,
       timeout: 11000
     }
-  ));*/
+  ));
 
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
