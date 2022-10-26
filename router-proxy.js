@@ -28,8 +28,6 @@ routeur.use((req, res, next) => {
 routeur.disable('x-powered-by');
 
 
-
-
 /*configUi.forEach(ui =>{
 
   const site = express();
@@ -39,14 +37,49 @@ routeur.disable('x-powered-by');
 */
 configUi.forEach(ui =>{
   const site = express();
-  routeur.use(rendertron.makeMiddleware(
+  routeur.use((req, res, next)=> {
+    const botUserAgents = [
+     'baiduspider',
+     'bingbot',
+     'embedly',
+     'facebookexternalhit',
+     'linkedinbot',
+     'outbrain',
+     'pinterest',
+     'quora link preview',
+     'rogerbot',
+     'showyoubot',
+     'slackbot',
+     'TelegramBot',
+     'twitterbot',
+     'vkShare',
+     'W3C_Validator',
+     'whatsapp',
+     'Discordbot' ]
+   
+   const ua = req.headers['user-agent'],
+     botlist = new RegExp(botUserAgents.join('|'), 'i'),
+     itis = botlist.test(ua);
+     if( itis = true) {
+       proxy.web(req, res, {
+         target: ui.render, 
+         changeOrigin: false,
+         pathRewrite: {
+           //pathRewritedd: '/', // rewrite path
+         }
+       });
+     } else {
+       next()
+     }
+   })
+  /*routeur.use(rendertron.makeMiddleware(
     {
       proxyUrl: ui.render+'/render',
       userAgentPattern: BOTS_LIST,
       injectShadyDom: true,
       timeout: 11000
     }
-  ));
+  ));*/
 
   site.use('/', express.static(ui.path));
   routeur.use(vhost(ui.domain, site));
@@ -76,5 +109,6 @@ routeur.use('/myapis',(req, res, next)=>{
     }
   });
 })
+
 
 module.exports = routeur;
