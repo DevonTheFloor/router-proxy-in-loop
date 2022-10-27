@@ -42,13 +42,14 @@ configUi.forEach(ui =>{
            }
          });
        } else {
-        const site = express();
-        site.use('/', express.static(ui.path));
-        routeur.use(vhost(ui.domain, site));
+        next();
        }
      })
-    
+      const site = express();
+      site.use('/', express.static(ui.path));
+      routeur.use(vhost(ui.domain, site));
     })
+
 configApi.forEach(api => {
   routeur.use(api.path,(req, res, next)=>{
     const pathRewrite = '^'+api.path;
