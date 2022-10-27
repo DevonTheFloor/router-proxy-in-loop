@@ -1,5 +1,3 @@
-const { Router } = require('express');
-
 const express = require('express'),
   routeur = express(),
   helmet = require('helmet'),
@@ -27,52 +25,30 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-
-/*configUi.forEach(ui =>{
-
-  const site = express();
-  site.use('/', express.static(ui.path));
-  routeur.use(vhost(ui.domain, site));
-})*/
-
-/*configUi.forEach(ui =>{
-  const site = express();
-  routeur.use((req, res, next)=> {
-    const botUserAgents = ['baiduspider','bingbot','embedly','facebookexternalhit','linkedinbot','outbrain','pinterest','quora link preview','rogerbot','showyoubot','slackbot','TelegramBot','twitterbot','vkShare','W3C_Validator','whatsapp','Discordbot' ]
-   
-   let ua = req.headers['user-agent'],
-     botlist = new RegExp(botUserAgents.join('|'), 'i'),
-     itis = botlist.test(ua);
-     if( itis = true) {
-       proxy.web(req, res, {
-         target: ui.render, 
-         changeOrigin: false,
-         pathRewrite: {
-           //pathRewritedd: '/', // rewrite path
-         }
-       });
-     } else {
-      site.use('/', express.static(ui.path));
-      routeur.use(vhost(ui.domain, site));
-     }
-   })*/
-
-configUi.forEach(ui =>{ 
-  const site = express(); 
-  routeur.use(rendertron.makeMiddleware(
-    {
-      proxyUrl: ui.render+'/render',
-      userAgentPattern: BOTS_LIST,
-      injectShadyDom: true,
-      timeout: 11000
-    }
-  ));
-
-  site.use('/', express.static(ui.path));
-  routeur.use(vhost(ui.domain, site));
-
-})
-
+configUi.forEach(ui =>{
+  console.log('ForEACH UI');
+     routeur.use((req, res, next)=> {
+      const botUserAgents = ['baiduspider','bingbot','embedly','facebookexternalh']
+     console.log('Before identification UA');
+     let ua = req.headers['user-agent'],
+       botlist = new RegExp(botUserAgents.join('|'), 'i'),
+       itis = botlist.test(ua);
+       if( itis = true) {
+         proxy.web(req, res, {
+           target: 'http://127.0.0.79', 
+           changeOrigin: false,
+           pathRewrite: {
+             //pathRewritedd: '/', // rewrite path
+           }
+         });
+       } else {
+        const site = express();
+        site.use('/', express.static(ui.path));
+        routeur.use(vhost(ui.domain, site));
+       }
+     })
+    
+    })
 configApi.forEach(api => {
   routeur.use(api.path,(req, res, next)=>{
     const pathRewrite = '^'+api.path;
