@@ -28,11 +28,28 @@ routeur.disable('x-powered-by');
 configUi.forEach(ui =>{
   console.log('ForEACH UI');
      routeur.use((req, res, next)=> {
-      const botUserAgents = ['baiduspider','bingbot','embedly','facebookexternalh']
+      const botUsrA = ['baiduspider',
+      'bingbot',
+      'embedly',
+      'facebookexternalhit',
+      'linkedinbot',
+      'outbrain',
+      'pinterest',
+      'quora link preview',
+      'rogerbot',
+      'showyoubot',
+      'slackbot',
+      'TelegramBot',
+      'twitterbot',
+      'vkShare',
+      'W3C_Validator',
+      'whatsapp',
+      'Discordbot']
+
      console.log('Before identification UA');
      let ua = req.headers['user-agent'],
-       botlist = new RegExp(botUserAgents.join('|'), 'i'),
-       itis = botlist.test(ua);
+       fullBotList = new RegExp(botUsrA.join('|'), 'i'),
+       itis = fullBotList.test(ua);
        if( itis = true) {
          proxy.web(req, res, {
            target: 'http://127.0.0.79', 
