@@ -27,36 +27,6 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-
-/*configUi.forEach(ui =>{
-
-  const site = express();
-  site.use('/', express.static(ui.path));
-  routeur.use(vhost(ui.domain, site));
-})*/
-
-/*configUi.forEach(ui =>{
-  const site = express();
-  routeur.use((req, res, next)=> {
-    const botUserAgents = ['baiduspider','bingbot','embedly','facebookexternalhit','linkedinbot','outbrain','pinterest','quora link preview','rogerbot','showyoubot','slackbot','TelegramBot','twitterbot','vkShare','W3C_Validator','whatsapp','Discordbot' ]
-   
-   let ua = req.headers['user-agent'],
-     botlist = new RegExp(botUserAgents.join('|'), 'i'),
-     itis = botlist.test(ua);
-     if( itis = true) {
-       proxy.web(req, res, {
-         target: ui.render, 
-         changeOrigin: false,
-         pathRewrite: {
-           //pathRewritedd: '/', // rewrite path
-         }
-       });
-     } else {
-      site.use('/', express.static(ui.path));
-      routeur.use(vhost(ui.domain, site));
-     }
-   })*/
-
 configUi.forEach(ui =>{ 
   const site = express(); 
   routeur.use(rendertron.makeMiddleware(
