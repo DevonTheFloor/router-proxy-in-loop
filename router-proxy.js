@@ -50,18 +50,24 @@ configUi.forEach(ui =>{
      let ua = req.headers['user-agent'],
        fullBotList = new RegExp(botUsrA.join('|'), 'i'),
        itis = fullBotList.test(ua);
+       console.log('UA: ', ua);
+
        if( itis = true) {
+        console.log('itiz :', itis);
          proxy.web(req, res, {
-           target: 'http://127.0.0.79', 
+           target: 'http://127.0.0.79:8888', 
            changeOrigin: false,
            pathRewrite: {
              //pathRewritedd: '/', // rewrite path
            }
          });
+         console.log('after proxy')
        } else {
+        console.log('In NEXT');
         next();
        }
      })
+     console.log('before site use');
       const site = express();
       site.use('/', express.static(ui.path));
       routeur.use(vhost(ui.domain, site));
