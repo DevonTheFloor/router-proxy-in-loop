@@ -27,7 +27,8 @@ routeur.disable('x-powered-by');
 
 configUi.forEach(ui =>{
   console.log('ForEACH UI');
-     routeur.use((req, res, next)=> {
+    const site = express();
+    routeur.use((req, res, next)=> {
       const botUsrA = ['baiduspider',
       'bingbot',
       'embedly',
@@ -52,7 +53,7 @@ configUi.forEach(ui =>{
        itis = fullBotList.test(ua);
        console.log('UA: ', ua);
 
-       if( itis = true) {
+       if(itis) {
         console.log('itiz :', itis);
          proxy.web(req, res, {
            target: 'http://127.0.0.79:8888', 
@@ -66,11 +67,10 @@ configUi.forEach(ui =>{
         console.log('In NEXT');
         next();
        }
-     })
-     console.log('before site use');
-      const site = express();
-      site.use('/', express.static(ui.path));
-      routeur.use(vhost(ui.domain, site));
+    })
+    console.log('before site use');
+    site.use('/', express.static(ui.path));
+    routeur.use(vhost(ui.domain, site));
     })
 
 configApi.forEach(api => {
