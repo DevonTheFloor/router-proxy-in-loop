@@ -1,6 +1,6 @@
 # Router-proxy-in-loop
 
-[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/DevonTheFloor/router-proxy/main/README.en.md)
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.en.md)
 
 Boucle d'applications Express() pour instancier des serveurc de fichiers statiques ainsi que les hosts virtuels pour les héberger sur le même serveur d'hebergement.
 
