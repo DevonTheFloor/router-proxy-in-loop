@@ -2,9 +2,9 @@
 
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.en.md)
 
-Boucle d'applications Express() pour instancier des serveurc de fichiers statiques ainsi que les hosts virtuels pour les héberger sur le même serveur d'hebergement.
+Boucle d'applications Express() pour instancier des serveurs de fichiers statiques ainsi que les hosts virtuels pour les héberger sur le même serveur d'hebergement.
 
-Les prennent en arguments des fichiers de configuration contenant les chemins des site et de leut API.
+Les boucles prennent en arguments des fichiers de configuration contenant les chemins des site et de leut API.
 
 Super pratique en version finale, mais lorsque que l'on souhaite travailler sur les middleware d' un seul vhost, tous les autres sont impactés.
 

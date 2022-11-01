@@ -4,7 +4,7 @@
 
 Express() application loop to instantiate static file servers as well as virtual hosts to host them on the same hosting server.
 
-Take them as arguments of the configuration files containing the paths of the sites and their API.
+The loops take as arguments configuration files containing the paths of the sites and their API.
 
 Super practical in the final version, but when you want to work on the middleware of a single vhost, all the others are impacted.
 
