@@ -1,19 +1,9 @@
-<<<<<<< HEAD
-=======
-const { Router } = require('express');
 
->>>>>>> prod
 const express = require('express'),
   routeur = express(),
   helmet = require('helmet'),
   httpProxy = require('http-proxy'),
   proxy = httpProxy.createProxyServer(),
-<<<<<<< HEAD
-  vhost = require('vhost');
-
-routeur.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*' );
-=======
   config = require('../router-config/config'),
   configUi = config.configUi,
   configApi = config.configApi,
@@ -25,7 +15,6 @@ routeur.use((req, res, next) => {
   BOTS_LIST = new RegExp(BOTS.join('|'),'i');
 
 routeur.use((req, res, next) => {
->>>>>>> prod
   res.setHeader('Access-Control-Allow-Origin', '*' );
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -37,16 +26,6 @@ routeur.use((req, res, next) => {
 
 routeur.disable('x-powered-by');
 
-<<<<<<< HEAD
-const piece = express();
-piece.use('/', express.static(process.env.PNR_PATH_UI));
-
-const anp = express();
-anp.use(express.static(preocess.env.ANP_PATH_UI));
-
-routeur.use(vhost(process.env.PNR_DOMAIN, piece));
-routeur.use(PNR_API_PATH,(req, res, next)=>{
-=======
 configUi.forEach(ui =>{ 
   const site = express(); 
   routeur.use(rendertron.makeMiddleware(
@@ -77,7 +56,6 @@ configApi.forEach(api => {
 })
 
 routeur.use('/myapis',(req, res, next)=>{
->>>>>>> prod
   proxy.web(req, res, {
     target: process.env.ANP_API_HOST, 
     changeOrigin: true,
@@ -87,28 +65,5 @@ routeur.use('/myapis',(req, res, next)=>{
   });
 })
 
-<<<<<<< HEAD
-routeur.use(vhost(preocess.env.ANP_DOMAIN, anp));
-routeur.use(ANP_API_PATH,(req, res, next)=>{
-  proxy.web(req, res, {
-    target: process.env.ANP_API_HOST, 
-    changeOrigin: true,
-    pathRewrite: {
-      '^/engin': '/', // rewrite path
-    }
-  });
-})
-
-routeur.use('/rssflow',(req, res, next)=>{
-    proxy.web(req, res, {
-      target: process.env.RSS_HOST, 
-      changeOrigin: true,
-      pathRewrite: {
-        '^/rssflow': '/', // rewrite path
-      }
-    });
-  })
-=======
->>>>>>> prod
 
 module.exports = routeur;
