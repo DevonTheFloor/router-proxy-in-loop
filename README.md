@@ -1,8 +1,8 @@
 # Router-proxy-in-loop
 
-- [![rc](https://img.shields.io/badge/lang-rc-6dd2b4)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.rc.md) - ![drapeau reunionnais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-rc.png)
+- [![rc](https://img.shields.io/badge/lang-rc-6dd2b4)](https://github.com/DevonTheFloor/router-proxy-in-loop/blob/main/README.rc.md) - ![drapeau reunionnais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-rc.png)
 
-- [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.en.md) - ![drapeau anglais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-en.png)
+- [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/DevonTheFloor/router-proxy-in-loop/blob/main/README.en.md) - ![drapeau anglais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-en.png)
 
 Boucle d'applications Express() pour instancier des serveurs de fichiers statiques ainsi que les hosts virtuels pour les héberger sur le même serveur d'hebergement.
 

@@ -1,7 +1,7 @@
 # Router-proxy-in-loop
-[![rc](https://img.shields.io/badge/lang-rc-6dd2b4)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.rc.md) - ![drapeau reunionnais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-rc.png)
+[![rc](https://img.shields.io/badge/lang-rc-6dd2b4)](https://github.com/DevonTheFloor/router-proxy-in-loop/blob/main/README.rc.md) - ![drapeau reunionnais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-rc.png)
 
-[![fr](https://img.shields.io/badge/lang-fr-blue)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.md) - ![drapeau français](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-fr.png)
+[![fr](https://img.shields.io/badge/lang-fr-blue)](https://github.com/DevonTheFloor/router-proxy-in-loop/blob/main/README.md) - ![drapeau français](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-fr.png)
 
 Express() application loop to instantiate static file servers as well as virtual hosts to host them on the same hosting server.
 
