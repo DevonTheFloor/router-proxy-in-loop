@@ -10,6 +10,7 @@ Ek sa ou sava mèt band fichiers statiques et tou le peu vhost ensemb dessi inn 
 
 Sa lé gadyamb quand toute lé fini, sement si ou té vé sange inn middleware, tou son bande dalon i sa bouge ensemb ou koné.
 
-Té ma di aou un nafère, mèt un branch "maintenance" dessi lekel ou sa ecrire inn par inn come sa minm ou gaille travail su inn san kasse tou le peu.
+Té ma di aou un nafère, mèt un branch "maintenance" dessi lekel ou sa ecrire inn par inn come sa minm ou gaille travail su inn san kasse tou le peu.  
+
 ---
 [![how-to](https://img.shields.io/badge/how--to-use-blue.svg)](https://github.com/jonatasemidio/multilanguage-readme-pattern/blob/master/STEPS.md)
