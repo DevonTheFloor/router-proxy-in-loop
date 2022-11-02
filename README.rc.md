@@ -1,6 +1,7 @@
 # Router-proxy-in-loop
 
-- [![rc](https://img.shields.io/badge/lang-rc-6dd2b4)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.rc.md) - ![drapeau reunionnais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-rc.png)
+- [![fr](https://img.shields.io/badge/lang-fr-blue)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.md) - ![drapeau français](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-fr.png)
+
 
 - [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/DevonTheFloor/router-proxy/blob/main/README.en.md) - ![drapeau anglais](https://thierry-go-dev.fr/my-illu/img/drapeau/flag-en.png)
 
